@@ -1,0 +1,71 @@
+<resources>
+    <string name="app_name">2D DATA CAPTURE</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_about">About</string>
+    <string name="action_zip">Zip and Export</string>
+    <string name="age">Select Age Group</string>
+    <string name="gender">Select your Gender</string>
+    <string name="geo">Select your State of Origin</string>
+
+    <string-array name="spinner1Items">
+        <item>14 – 18</item>
+        <item>19 – 23</item>
+        <item>24 – 28</item>
+        <item>29 – 33</item>
+        <item>34 – 38</item>
+        <item>39 – 43</item>
+        <item>44 – 48</item>
+        <item>49 – 53</item>
+        <item>54 – 58</item>
+        <item>59 Above</item>
+    </string-array>
+    <string-array name="spinner2Items">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <string-array name="spinner3Items">
+        //North Central (loosely known as Middle Belt):
+        <item>Benue</item>
+        <item>Kogi</item>
+        <item>Kwara</item>
+        <item>Nasarawa</item>
+        <item>Niger</item>
+        <item>Plateau</item>
+        <item>F.C.T Abuja</item>
+        //North East:
+        <item>Adamawa</item>
+        <item>Bauchi</item>
+        <item>Borno</item>
+        <item>Gombe</item>
+        <item>Taraba</item>
+        <item>Yobe</item>
+        //North West:
+        <item>Jigawa</item>
+        <item>Kaduna</item>
+        <item>Kano</item>
+        <item>Katsina</item>
+        <item>Kebbi</item>
+        <item>Sokoto</item>
+        <item>Zamfara</item>
+        //South East:
+        <item>Abia</item>
+        <item>Anambra</item>
+        <item>Ebonyi</item>
+        <item>Enugu</item>
+        <item>Imo</item>
+        //South South:
+        <item>Akwa Ibom</item>
+        <item>Cross River</item>
+        <item>Bayelsa</item>
+        <item>Rivers</item>
+        <item>Delta</item>
+        <item>Edo</item>
+        //South West:
+        <item>Ekiti</item>
+        <item>Lagos</item>
+        <item>Ogun</item>
+        <item>Ondo</item>
+        <item>Osun</item>
+        <item>Oyo</item>
+    </string-array>
+</resources>
