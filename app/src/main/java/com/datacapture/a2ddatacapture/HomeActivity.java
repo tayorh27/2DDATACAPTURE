@@ -2,6 +2,7 @@ package com.datacapture.a2ddatacapture;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -9,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,8 +21,8 @@ import android.widget.Toast;
 import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -64,14 +66,18 @@ public class HomeActivity extends AppCompatActivity {
                 else if (stext3 > 31)
                     stext3 = 5;
 
-                Date dt = Calendar.getInstance().getTime();
-                String filename = dt.getDay() + "." + dt.getMonth() + "." + dt.getYear() + "_" + stext1 + "_" + stext2 + "_" + stext3 + ".jpg";
+                SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy");
+                //Date dt = Calendar.getInstance().getTime();
+                //String filename = dt.getDay() + "." + dt.getMonth() + "." + dt.getYear() + "_" + stext1 + "_" + stext2 + "_" + stext3 + ".jpg";
+                String filename = sdf.format(Calendar.getInstance().getTime()) + "_" + stext1 + "_" + stext2 + "_" + stext3 + ".jpg";
 
                 if (!tag.contentEquals("default")) {
                     general.SaveImage(iv, filename);
                     spinner1.setSelection(0);
                     spinner2.setSelection(0);
                     spinner3.setSelection(0);
+                    iv.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher_web));
+                    iv.setTag("default");
                 } else {
                     Snackbar.make(view, "Please upload image", Snackbar.LENGTH_LONG).show();
                 }
@@ -137,17 +143,32 @@ public class HomeActivity extends AppCompatActivity {
         pd.setCancelable(false);
         pd.setCanceledOnTouchOutside(false);
         pd.show();
-        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS + "/db_zipped_images/");
+        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/db_zipped_images/");
+        path.mkdirs();
         File file = new File(path, "images.zip");
         ZipManager zipManager = new ZipManager();
         zipManager.zip(general.ListImages(), file.toString());
         pd.dismiss();
-        Toast.makeText(HomeActivity.this,"All files zipped.",Toast.LENGTH_LONG).show();
+        Toast.makeText(HomeActivity.this, "All files zipped.", Toast.LENGTH_LONG).show();
         SendEmailAttachment();
     }
 
     private void SendEmailAttachment() {
-        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS + "/db_zipped_images/");
+        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES   + "/db_zipped_images/");
         File file = new File(path, "images.zip");
+        Uri _uri = Uri.parse("file://" + file.toString());
+        try {
+            Intent emailIntent = new Intent(Intent.ACTION_SEND);
+            emailIntent.setType("plain/text");
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"abc@xyz.com"});
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Enter your subject here");
+            if (_uri != null) {
+                emailIntent.putExtra(Intent.EXTRA_STREAM, _uri);
+            }
+            emailIntent.putExtra(Intent.EXTRA_TEXT, "Enter your message here");
+            startActivity(Intent.createChooser(emailIntent, "Sending email..."));
+        } catch (Exception e) {
+            Log.e("Error frm Sending Email", e.toString());
+        }
     }
 }
